@@ -1,1 +1,2 @@
-export { default as NoStyle } from "./NoStyle";
+export { default as Fail } from "./Fail";
+export { default as Stars } from "./Stars";

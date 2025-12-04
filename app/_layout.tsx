@@ -1,23 +1,45 @@
 import { useEffect } from "react";
 import * as NavigationBar from "expo-navigation-bar";
-import { StatusBar } from "react-native";
+import { StatusBar, Platform } from "react-native";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from "@expo-google-fonts/roboto";
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_500Medium,
+    Roboto_700Bold,
+  });
+
   useEffect(() => {
-    NavigationBar.setBackgroundColorAsync("rgba(5,5,7,0.9)");
-    NavigationBar.setButtonStyleAsync("light");
+    if (Platform.OS === 'android') {
+      NavigationBar.setBackgroundColorAsync('#000000');
+      NavigationBar.setButtonStyleAsync('light');
+    }
   }, []);
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <>
       <StatusBar
         translucent
-        backgroundColor="transparent"
+        backgroundColor="black"
         barStyle="light-content"
       />
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -27,9 +49,9 @@ export default function RootLayout() {
           end={{ x: 1, y: 1 }}
           style={{ flex: 1 }}
         >
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="index" />
-            </Stack>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+          </Stack>
         </LinearGradient>
       </GestureHandlerRootView>
       <Toast />

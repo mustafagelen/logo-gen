@@ -18,8 +18,8 @@ export default function StyleCard({ title, icon, selected, onPress }: StyleCardP
         >
             <View
                 style={tw`w-20 h-20 rounded-2xl items-center justify-center ${selected
-                        ? 'bg-primary-purple border-2 border-accent-purple'
-                        : 'bg-card-bg border-2 border-card-border'
+                    ? 'bg-red-500 border-2 border-accent-purple'
+                    : 'bg-card-bg border-2 border-card-border'
                     }`}
             >
                 {icon}

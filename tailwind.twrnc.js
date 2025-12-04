@@ -22,7 +22,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      gilroy: ['Gilroy', 'sans-serif'],
+      roboto: ['Roboto', 'sans-serif'],
     },
   },
 };

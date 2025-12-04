@@ -6,28 +6,35 @@ import NoStyle from '@/components/icons/NoStyle';
 
 
 const logoStyles = [
-    { id: 'no-style', title: 'No Style', icon: NoStyle },
- 
+    { id: 'no1', title: 'No Style', icon: NoStyle },
+    { id: 'no2', title: 'No Style', icon: NoStyle },
+    { id: 'no3', title: 'No Style', icon: NoStyle },
+    { id: 'no4', title: 'No Style', icon: NoStyle },
+    { id: 'no5', title: 'No Style', icon: NoStyle },
+    { id: 'no6', title: 'No Style', icon: NoStyle },
+
 ];
 
 interface LogoStyleSelectorProps {
     selectedStyle: string;
     onStyleSelect: (styleId: string) => void;
+    isSelected?: boolean;
 }
 
 export default function LogoStyleSelector({
     selectedStyle,
-    onStyleSelect
+    onStyleSelect,
+    isSelected
 }: LogoStyleSelectorProps) {
     return (
         <View style={tw`w-full`}>
-            <Text style={tw`text-text-primary text-lg font-semibold mb-4`}>
+            <Text style={tw`text-[#FAFAFA] text-[20px] font-extrabold mb-3`}>
                 Logo Styles
             </Text>
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={tw`px-1`}
+                contentContainerStyle={tw`px-1 gap-[6px]`}
             >
                 {logoStyles.map((style) => {
                     const IconComponent = style.icon;

@@ -14,18 +14,18 @@ export default function PromptInput({
     maxLength = 500
 }: PromptInputProps) {
     return (
-        <View style={tw`w-full`}>
+        <View style={tw`w-full relative`}>
             <TextInput
-                style={tw`bg-card-bg text-text-primary p-4 rounded-2xl min-h-32 text-base`}
+                style={tw`rounded-[16px] text-[16px]  bg-[#1A1A2E] px-3 pt-4 pb-8 h-[175px] text-[#71717A]`}
                 placeholder="A blue lion logo reading 'HEXA' in bold letters"
-                placeholderTextColor={tw.color('text-secondary')}
                 value={value}
                 onChangeText={onChangeText}
                 multiline
                 maxLength={maxLength}
                 textAlignVertical="top"
+                scrollEnabled={true}
             />
-            <Text style={tw`text-text-secondary text-xs mt-2 text-right`}>
+            <Text style={tw`absolute bottom-4 left-4 text-[#71717A] text-[12px]`}>
                 {value.length}/{maxLength}
             </Text>
         </View>

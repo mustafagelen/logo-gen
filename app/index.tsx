@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import tw from '@/utils/tailwind';
 import PromptInput from '@/components/home/PromptInput';
@@ -8,11 +8,7 @@ import LogoStyleSelector from '@/components/home/LogoStyleSelector';
 import CreateButton from '@/components/home/CreateButton';
 
 const surprisePrompts = [
-    "A majestic phoenix rising from flames in vibrant orange and gold",
-    "A minimalist mountain peak with a compass integrated into the design",
-    "A playful robot mascot holding a lightbulb",
-    "An elegant swan forming the letter 'S' in flowing curves",
-    "A geometric wolf head made of triangular shapes",
+    "Sugar Rush Bakery için eğlenceli ve tuhaf bir fırın logosu, cupcake ve serpiştirme ögeleri ile",
 ];
 
 export default function HomeScreen() {
@@ -31,7 +27,7 @@ export default function HomeScreen() {
     return (
         <LinearGradient
             colors={['#0A0A0F', '#1A1A2E', '#0A0A0F']}
-            style={tw`flex-1`}
+            style={tw`flex-1 relative`}
         >
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -41,13 +37,14 @@ export default function HomeScreen() {
                     style={tw`flex-1`}
                     contentContainerStyle={tw`px-6 py-8`}
                     showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
                 >
-                    <View style={tw`items-center mb-8 mt-4`}>
-                        <Text style={tw`text-text-primary text-2xl font-bold`}>AI Logo</Text>
+                    <View style={tw`items-center py-5`}>
+                        <Text style={tw`text-[#FAFAFA] text-[17px] font-extrabold`}>AI Logo</Text>
                     </View>
                     <View style={tw`mb-6`}>
                         <View style={tw`flex-row items-center justify-between mb-3`}>
-                            <Text style={tw`text-text-primary text-lg font-semibold`}>
+                            <Text style={tw`text-[#FAFAFA] text-[20px] font-extrabold`}>
                                 Enter Your Prompt
                             </Text>
                             <SurpriseButton onPress={handleSurprise} />
@@ -60,12 +57,13 @@ export default function HomeScreen() {
                             onStyleSelect={setSelectedStyle}
                         />
                     </View>
-                    <View style={tw`flex-1 min-h-20`} />
+                    <View style={tw`h-20`} />
                 </ScrollView>
-                <View style={tw`px-6 pb-8 pt-4 bg-dark-bg`}>
-                    <CreateButton onPress={handleCreate} disabled={!prompt.trim()} />
-                </View>
             </KeyboardAvoidingView>
+
+            <TouchableOpacity style={tw`absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 bg-dark-bg z-10`}>
+                <CreateButton onPress={handleCreate} disabled={!prompt.trim()} />
+            </TouchableOpacity>
         </LinearGradient>
     );
 }
