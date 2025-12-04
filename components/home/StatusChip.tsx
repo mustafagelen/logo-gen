@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import tw from '@/utils/tailwind';
 import { JobStatus } from '@/types';
+import { Fail } from '../icons';
 
 
 interface StatusChipProps {
@@ -17,49 +19,53 @@ export default function StatusChip({ status, title, subtitle, url }: StatusChipP
         switch (status) {
             case 'processing':
                 return (
-                    <View style={tw`flex-row items-center gap-3 bg-[#1A1A1A] px-5 py-4 rounded-2xl`}>
-                        <ActivityIndicator size="small" color="#FFFFFF" />
-                        <View style={tw`flex-1`}>
-                            <Text style={tw`text-white text-[15px] font-semibold`}>{title}</Text>
-                            <Text style={tw`text-[#A1A1AA] text-[13px] mt-0.5`}>{subtitle}</Text>
+                    <View style={tw`flex-row items-stretch bg-[#232329] rounded-[16px] overflow-hidden`}>
+                        <View style={tw`bg-[#1A1A1A] px-6 items-center justify-center`}>
+                            <ActivityIndicator size="small" color="#FFFFFF" />
+                        </View>
+                        <View style={tw`flex-1 px-5 py-5 justify-center`}>
+                            <Text style={tw`text-white text-[17px] font-bold`}>{title}</Text>
+                            <Text style={tw`text-[#6B7280] text-[15px] mt-0.5`}>{subtitle}</Text>
                         </View>
                     </View>
                 );
 
             case 'done':
                 return (
-                    <LinearGradient
-                        colors={['#4F46E5', '#7C3AED']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={tw`flex-row items-center gap-3 px-5 py-4 rounded-2xl`}
-                    >
-                        <View style={tw`w-6 h-6 bg-white rounded-full items-center justify-center`}>
-                            <Text style={tw`text-[#4F46E5] text-[16px] font-bold`}>✓</Text>
+                    <View style={tw`flex-row items-stretch h-[70px] rounded-[16px] overflow-hidden`}>
+                        <View style={tw`bg-white w-[80px] items-center justify-center`}>
+                            {url && (
+                                <Image
+                                    source={{ uri: url }}
+                                    style={tw`w-12 h-12`}
+                                    contentFit="contain"
+                                    transition={200}
+                                />
+                            )}
                         </View>
-                        <View style={tw`flex-1`}>
-                            <Text style={tw`text-white text-[15px] font-semibold`}>{title}</Text>
-                            <Text style={tw`text-white/80 text-[13px] mt-0.5`}>{subtitle}</Text>
-                        </View>
-                    </LinearGradient>
+                        <LinearGradient
+                            colors={['#2938DC', '#943DFF']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={tw`flex-1 px-3 py-[14.5px] justify-center`}
+                        >
+                            <Text style={tw`text-[#FAFAFA] text-[16px] font-bold`}>{title}</Text>
+                            <Text style={tw`text-[#D4D4D8] text-[13px] font-manrope font-medium`}>{subtitle}</Text>
+                        </LinearGradient>
+                    </View>
                 );
 
             case 'failed':
                 return (
-                    <LinearGradient
-                        colors={['#EF4444', '#F97316']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={tw`flex-row items-center gap-3 px-5 py-4 rounded-2xl`}
-                    >
-                        <View style={tw`w-6 h-6 bg-white rounded-full items-center justify-center`}>
-                            <Text style={tw`text-[#EF4444] text-[16px] font-bold`}>!</Text>
+                    <View style={tw`flex-row items-stretch bg-[#f04343] rounded-[16px] overflow-hidden`}>
+                        <View style={tw`bg-[#f27c7c] p-[19px] items-center justify-center`}>
+                            <Fail width={32} height={32} color="#FAFAFA" />
                         </View>
-                        <View style={tw`flex-1`}>
-                            <Text style={tw`text-white text-[15px] font-semibold`}>{title}</Text>
-                            <Text style={tw`text-white/80 text-[13px] mt-0.5`}>{subtitle}</Text>
+                        <View style={tw`flex-1 px-5 py-5 justify-center`}>
+                            <Text style={tw`text-white text-[16px] font-bold`}>{title}</Text>
+                            <Text style={tw`text-[#D4D4D8] text-[13px]`}>{subtitle}</Text>
                         </View>
-                    </LinearGradient>
+                    </View>
                 );
         }
     };

@@ -12,6 +12,7 @@
     "gen-icons": "svgr --native --typescript --out-dir components/icons assets/icons"
   },
   "dependencies": {
+    "@expo-google-fonts/manrope": "^0.4.2",
     "@expo-google-fonts/roboto": "^0.4.2",
     "@expo/vector-icons": "^15.0.3",
     "@react-navigation/bottom-tabs": "^7.4.0",

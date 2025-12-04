@@ -5,7 +5,7 @@ import { Job, JobStatus } from '../types';
 interface JobContextType {
     status: JobStatus;
     jobData: Job | null;
-    startJob: (prompt: string) => Promise<void>;
+    startJob: (prompt: string, logoStyle: string) => Promise<void>;
     error: string | null;
     resetJob: () => void;
 }

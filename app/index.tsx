@@ -36,7 +36,7 @@ export default function HomeScreen() {
         if (isProcessing) {
             Toast.show({
                 type: 'error',
-                text1: 'Art generation is already in progress. Please wait.',
+                text1: 'Already in progress. Please wait.',
                 position: 'bottom',
                 visibilityTime: 3500,
                 bottomOffset: 100,
@@ -47,8 +47,7 @@ export default function HomeScreen() {
         if (isPromptEmpty) {
             Toast.show({
                 type: 'error',
-                text1: 'Input Missing',
-                text2: 'Please enter a creative prompt.',
+                text1: 'Please enter a creative prompt.',
                 position: 'bottom',
                 visibilityTime: 3500,
                 bottomOffset: 100,
@@ -57,7 +56,7 @@ export default function HomeScreen() {
         }
 
         const fullPrompt = prompt + (selectedStyle !== 'none' ? `, Style: ${selectedStyle}` : '');
-        startJob(fullPrompt);
+        startJob(fullPrompt, selectedStyle);
     };
 
     const handleViewResult = () => {
@@ -78,7 +77,7 @@ export default function HomeScreen() {
             case 'processing':
                 return {
                     title: 'Creating Your Design...',
-                    subtitle: 'Ready in 2 minutes'
+                    subtitle: 'Ready in a minute'
                 };
             case 'done':
                 return {
@@ -101,7 +100,6 @@ export default function HomeScreen() {
             colors={['#0b0b0d', '#1A1A2E', '#0A0A0F']}
             style={tw`flex-1 relative`}
         >
-
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={tw`flex-1`}
@@ -112,7 +110,7 @@ export default function HomeScreen() {
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
                 >
-                    <View style={tw`items-center py-5`}>
+                    <View style={tw`items-center py-[19px]`}>
                         <Text style={tw`text-[#FAFAFA] text-[17px] font-extrabold`}>AI Logo</Text>
                     </View>
 
@@ -120,7 +118,7 @@ export default function HomeScreen() {
                         <TouchableOpacity
                             onPress={handleViewResult}
                             disabled={status !== 'done'}
-                            style={tw`py-3 items-center`}
+                            style={tw`items-center`}
                         >
                             <StatusChip
                                 status={status}
@@ -130,9 +128,8 @@ export default function HomeScreen() {
                             />
                         </TouchableOpacity>
                     )}
-
-                    <View style={tw`mb-6 mt-4`}>
-                        <View style={tw`flex-row items-center justify-between mb-3`}>
+                    <View style={tw`mb-6`}>
+                        <View style={tw`flex-row items-center justify-between mb-3 pt-3`}>
                             <Text style={tw`text-[#FAFAFA] text-[20px] font-extrabold`}>
                                 Enter Your Prompt
                             </Text>

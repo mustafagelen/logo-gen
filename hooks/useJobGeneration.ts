@@ -16,7 +16,7 @@ export const useJobGeneration = () => {
     setError(null);
   };
 
-  const startJob = async (prompt: string) => {
+  const startJob = async (prompt: string, logoStyle: string) => {
     try {
       setStatus('processing');
       setError(null);
@@ -24,6 +24,7 @@ export const useJobGeneration = () => {
         prompt: prompt.trim(),
         status: 'processing',
         createdAt: serverTimestamp(),
+        logoStyle: logoStyle,
       });
 
       setCurrentJobId(docRef.id);
