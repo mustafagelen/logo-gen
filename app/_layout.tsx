@@ -1,39 +1,38 @@
-import {
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { Stack } from "expo-router";
+import { useEffect } from "react";
+import * as NavigationBar from "expo-navigation-bar";
 import { StatusBar } from "react-native";
+import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
-import tw from "@/utils/tailwind";
-import "react-native-reanimated";
-
-function RootLayoutNav() {
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(tabs)" />
-        </Stack>
-      </SafeAreaView>
-    </GestureHandlerRootView>
-  );
-}
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function RootLayout() {
+  useEffect(() => {
+    NavigationBar.setBackgroundColorAsync("rgba(5,5,7,0.9)");
+    NavigationBar.setButtonStyleAsync("light");
+  }, []);
 
   return (
-    <ThemeProvider value={DefaultTheme}>
+    <>
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle="dark-content"
+        barStyle="light-content"
       />
-      <RootLayoutNav />
-      <Toast/>
-    </ThemeProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <LinearGradient
+          colors={["#050507", "#0C0D18", "#1A0D2E"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{ flex: 1 }}
+        >
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" />
+            </Stack>
+        </LinearGradient>
+      </GestureHandlerRootView>
+      <Toast />
+    </>
   );
 }
