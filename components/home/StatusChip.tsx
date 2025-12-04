@@ -2,19 +2,20 @@ import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import tw from '@/utils/tailwind';
+import { JobStatus } from '@/types';
 
-type StatusType = 'loading' | 'success' | 'error';
 
 interface StatusChipProps {
-    status: StatusType;
+    status: JobStatus;
     title: string;
     subtitle: string;
+    url?: string;
 }
 
-export default function StatusChip({ status, title, subtitle }: StatusChipProps) {
+export default function StatusChip({ status, title, subtitle, url }: StatusChipProps) {
     const renderContent = () => {
         switch (status) {
-            case 'loading':
+            case 'processing':
                 return (
                     <View style={tw`flex-row items-center gap-3 bg-[#1A1A1A] px-5 py-4 rounded-2xl`}>
                         <ActivityIndicator size="small" color="#FFFFFF" />
@@ -25,7 +26,7 @@ export default function StatusChip({ status, title, subtitle }: StatusChipProps)
                     </View>
                 );
 
-            case 'success':
+            case 'done':
                 return (
                     <LinearGradient
                         colors={['#4F46E5', '#7C3AED']}
@@ -43,7 +44,7 @@ export default function StatusChip({ status, title, subtitle }: StatusChipProps)
                     </LinearGradient>
                 );
 
-            case 'error':
+            case 'failed':
                 return (
                     <LinearGradient
                         colors={['#EF4444', '#F97316']}

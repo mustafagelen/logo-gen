@@ -9,6 +9,13 @@ export const useJobGeneration = () => {
   const [status, setStatus] = useState<JobStatus>('idle');
   const [error, setError] = useState<string | null>(null);
 
+  const resetJob = () => {
+    setCurrentJobId(null);
+    setJobData(null);
+    setStatus('idle');
+    setError(null);
+  };
+
   const startJob = async (prompt: string) => {
     try {
       setStatus('processing');
@@ -34,9 +41,9 @@ export const useJobGeneration = () => {
     const unsubscribe = onSnapshot(doc(db, 'jobs', currentJobId), (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data() as Job;
-        
+
         setJobData({ ...data, id: docSnap.id });
-        
+
         if (data.status) {
           setStatus(data.status);
         }
@@ -50,10 +57,11 @@ export const useJobGeneration = () => {
     return () => unsubscribe();
   }, [currentJobId]);
 
-  return { 
-    startJob, 
-    jobData, 
-    status, 
-    error 
+  return {
+    startJob,
+    jobData,
+    status,
+    error,
+    resetJob
   };
 };
