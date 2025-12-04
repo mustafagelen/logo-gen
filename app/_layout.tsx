@@ -38,16 +38,9 @@ export default function RootLayout() {
       />
       <GestureHandlerRootView style={{ flex: 1 }}>
         <JobProvider>
-          <LinearGradient
-            colors={["#050507", "#0C0D18", "#1A0D2E"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={{ flex: 1 }}
-          >
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="index" />
-            </Stack>
-          </LinearGradient>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+          </Stack>
         </JobProvider>
       </GestureHandlerRootView>
       <Toast />

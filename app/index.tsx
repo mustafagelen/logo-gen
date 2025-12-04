@@ -9,6 +9,10 @@ import LogoStyleSelector from '@/components/home/LogoStyleSelector';
 import CreateButton from '@/components/home/CreateButton';
 import StatusChip from '@/components/home/StatusChip';
 import { useJob } from '@/hooks/JobContext';
+import Toast from 'react-native-toast-message';
+import { BlurView } from 'expo-blur';
+
+
 
 const surprisePrompts = [
     "Sugar Rush Bakery için eğlenceli ve tuhaf bir fırın logosu, cupcake ve serpiştirme ögeleri ile",
@@ -17,9 +21,8 @@ const surprisePrompts = [
 export default function HomeScreen() {
     const { status, jobData, startJob, error, resetJob } = useJob();
     const router = useRouter();
-
     const [prompt, setPrompt] = useState('');
-    const [selectedStyle, setSelectedStyle] = useState('no-style');
+    const [selectedStyle, setSelectedStyle] = useState('none');
 
     const handleSurprise = () => {
         const randomPrompt = surprisePrompts[Math.floor(Math.random() * surprisePrompts.length)];
@@ -27,16 +30,33 @@ export default function HomeScreen() {
     };
 
     const handleCreate = () => {
-        if (status === 'processing') {
-            Alert.alert("Busy!", "Art generation is already in progress. Please wait.");
-            return;
-        }
-        if (!prompt.trim()) {
-            Alert.alert("Input Missing", "Please enter a creative prompt.");
+        const isProcessing = status === 'processing';
+        const isPromptEmpty = !prompt.trim();
+
+        if (isProcessing) {
+            Toast.show({
+                type: 'error',
+                text1: 'Art generation is already in progress. Please wait.',
+                position: 'bottom',
+                visibilityTime: 3500,
+                bottomOffset: 100,
+            });
             return;
         }
 
-        const fullPrompt = prompt + (selectedStyle !== 'no-style' ? `, Style: ${selectedStyle}` : '');
+        if (isPromptEmpty) {
+            Toast.show({
+                type: 'error',
+                text1: 'Input Missing',
+                text2: 'Please enter a creative prompt.',
+                position: 'bottom',
+                visibilityTime: 3500,
+                bottomOffset: 100,
+            });
+            return;
+        }
+
+        const fullPrompt = prompt + (selectedStyle !== 'none' ? `, Style: ${selectedStyle}` : '');
         startJob(fullPrompt);
     };
 
@@ -78,9 +98,10 @@ export default function HomeScreen() {
 
     return (
         <LinearGradient
-            colors={['#0A0A0F', '#1A1A2E', '#0A0A0F']}
+            colors={['#0b0b0d', '#1A1A2E', '#0A0A0F']}
             style={tw`flex-1 relative`}
         >
+
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={tw`flex-1`}
@@ -129,10 +150,9 @@ export default function HomeScreen() {
                 </ScrollView>
             </KeyboardAvoidingView>
 
-            <View style={tw`absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 bg-[#0A0A0F] z-10`}>
+            <View style={tw`absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 bg-transparent z-10`}>
                 <CreateButton
                     onPress={handleCreate}
-                    disabled={!prompt.trim() || status === 'processing'}
                 />
             </View>
         </LinearGradient>

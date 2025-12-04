@@ -4,32 +4,32 @@ import tw from '@/utils/tailwind';
 
 interface StyleCardProps {
     title: string;
-    icon: React.ReactNode;
+    icon: React.ReactNode | string;
     selected: boolean;
     onPress: () => void;
 }
 
 export default function StyleCard({ title, icon, selected, onPress }: StyleCardProps) {
     return (
-        <TouchableOpacity
-            style={tw`items-center mr-3`}
-            onPress={onPress}
-            activeOpacity={0.7}
-        >
-            <View
-                style={tw`w-20 h-20 rounded-2xl items-center justify-center ${selected
-                    ? 'bg-red-500 border-2 border-accent-purple'
-                    : 'bg-card-bg border-2 border-card-border'
-                    }`}
+        <View style={tw`items-center`}>
+            <TouchableOpacity
+                onPress={onPress}
+                activeOpacity={0.8}
+                style={tw.style(
+                    `w-[90px] h-[90px] rounded-[16px] bg-[#272b57] items-center justify-center overflow-hidden`,
+                    selected && 'border-2 border-white'
+                )}
             >
                 {icon}
-            </View>
+            </TouchableOpacity>
             <Text
-                style={tw`text-xs mt-2 ${selected ? 'text-text-primary font-semibold' : 'text-text-secondary'
-                    }`}
+                style={tw.style(
+                    `font-roboto text-[13px] mt-[6px]`,
+                    selected ? 'text-white font-bold' : 'text-[#71717A]'
+                )}
             >
                 {title}
             </Text>
-        </TouchableOpacity>
+        </View>
     );
 }

@@ -1,53 +1,64 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import React from 'react';
+import { ScrollView, View, Text, Image } from 'react-native';
 import tw from '@/utils/tailwind';
 import StyleCard from './StyleCard';
 import NoStyle from '@/components/icons/NoStyle';
 
+const pngIcons: Record<string, any> = {
+    monogram: require('@/assets/icons/png/monogram.png'),
+    abstract: require('@/assets/icons/png/abstract.png'),
+    mascot: require('@/assets/icons/png/mascot.png'),
+};
 
 const logoStyles = [
-    { id: 'no1', title: 'No Style', icon: NoStyle },
-    { id: 'no2', title: 'No Style', icon: NoStyle },
-    { id: 'no3', title: 'No Style', icon: NoStyle },
-    { id: 'no4', title: 'No Style', icon: NoStyle },
-    { id: 'no5', title: 'No Style', icon: NoStyle },
-    { id: 'no6', title: 'No Style', icon: NoStyle },
-
+    { id: 'none', title: 'No Style' },
+    { id: 'monogram', title: 'Monogram' },
+    { id: 'abstract', title: 'Abstract' },
+    { id: 'mascot', title: 'Mascot' },
 ];
 
 interface LogoStyleSelectorProps {
     selectedStyle: string;
     onStyleSelect: (styleId: string) => void;
-    isSelected?: boolean;
 }
 
 export default function LogoStyleSelector({
     selectedStyle,
     onStyleSelect,
-    isSelected
 }: LogoStyleSelectorProps) {
+    const renderIcon = (styleId: string) => {
+        if (styleId === 'none') {
+            return <NoStyle width={40} height={40} />;
+        }
+        return (
+            <Image
+                source={pngIcons[styleId]}
+                style={{ width: 90, height: 90 }}
+                resizeMode="cover"
+            />
+        );
+    };
+
     return (
         <View style={tw`w-full`}>
-            <Text style={tw`text-[#FAFAFA] text-[20px] font-extrabold mb-3`}>
+            <Text style={tw`text-[#FAFAFA] text-[20px] font-extrabold mb-3 leading-[25px]`}>
                 Logo Styles
             </Text>
+
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={tw`px-1 gap-[6px]`}
+                contentContainerStyle={tw`gap-4 py-2`}
             >
-                {logoStyles.map((style) => {
-                    const IconComponent = style.icon;
-                    return (
-                        <StyleCard
-                            key={style.id}
-                            title={style.title}
-                            icon={<IconComponent width={40} height={40} />}
-                            selected={selectedStyle === style.id}
-                            onPress={() => onStyleSelect(style.id)}
-                        />
-                    );
-                })}
+                {logoStyles.map((style) => (
+                    <StyleCard
+                        key={style.id}
+                        title={style.title}
+                        icon={renderIcon(style.id)}
+                        selected={selectedStyle === style.id}
+                        onPress={() => onStyleSelect(style.id)}
+                    />
+                ))}
             </ScrollView>
         </View>
     );

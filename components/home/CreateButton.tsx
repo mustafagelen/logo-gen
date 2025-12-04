@@ -6,23 +6,21 @@ import Stars from '@/components/icons/Stars';
 
 interface CreateButtonProps {
     onPress: () => void;
-    disabled?: boolean;
 }
 
-export default function CreateButton({ onPress, disabled = false }: CreateButtonProps) {
+export default function CreateButton({ onPress }: CreateButtonProps) {
     return (
         <TouchableOpacity
             onPress={onPress}
-            disabled={disabled}
             activeOpacity={0.8}
             style={tw`w-full`}
         >
             <LinearGradient
-                colors={['#5D5FEF', '#B74FED']}
+                colors={['#2938DC', '#943DFF']}
+                locations={[0.25, 1.0]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
-                style={tw`py-4 rounded-full flex-row items-center justify-center gap-2 ${disabled ? 'opacity-50' : ''
-                    }`}
+                style={tw`py-4 rounded-full h-14 flex-row items-center justify-center gap-2`}
             >
                 <Text style={tw`text-white font-roboto text-[17px] font-extrabold`}>Create</Text>
                 <Stars width={20} height={20} />
