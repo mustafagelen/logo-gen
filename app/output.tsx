@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
-import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import tw from '@/utils/tailwind';
-import { Ionicons } from '@expo/vector-icons';
 import { useJob } from '@/hooks/JobContext';
 import Toast from 'react-native-toast-message';
 import { Copy } from '@/components/icons';

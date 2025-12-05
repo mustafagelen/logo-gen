@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import tw from '@/utils/tailwind';
@@ -10,8 +10,6 @@ import CreateButton from '@/components/home/CreateButton';
 import StatusChip from '@/components/home/StatusChip';
 import { useJob } from '@/hooks/JobContext';
 import Toast from 'react-native-toast-message';
-import { BlurView } from 'expo-blur';
-
 
 
 const surprisePrompts = [
