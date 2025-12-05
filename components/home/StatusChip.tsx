@@ -19,13 +19,13 @@ export default function StatusChip({ status, title, subtitle, url }: StatusChipP
         switch (status) {
             case 'processing':
                 return (
-                    <View style={tw`flex-row items-stretch bg-[#232329] rounded-[16px] overflow-hidden`}>
-                        <View style={tw`bg-[#1A1A1A] px-6 items-center justify-center`}>
-                            <ActivityIndicator size="small" color="#FFFFFF" />
+                    <View style={tw`flex-row items-stretch h-[70px] bg-[#232329] rounded-[16px] overflow-hidden`}>
+                        <View style={tw`bg-[#1A1A1A] p-4 items-center justify-center`}>
+                            <ActivityIndicator style={tw`w-9 h-9`} color="#FFFFFF" />
                         </View>
-                        <View style={tw`flex-1 px-5 py-5 justify-center`}>
-                            <Text style={tw`text-white text-[17px] font-bold`}>{title}</Text>
-                            <Text style={tw`text-[#6B7280] text-[15px] mt-0.5`}>{subtitle}</Text>
+                        <View style={tw`flex-1 px-3 py-[14.5px] justify-center`}>
+                            <Text style={tw`text-[FAFAFA] text-[16px] font-bold`}>{title}</Text>
+                            <Text style={tw`text-[#71717A] text-[13px]`}>{subtitle}</Text>
                         </View>
                     </View>
                 );

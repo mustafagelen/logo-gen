@@ -1,50 +1,157 @@
-# Welcome to your Expo app 👋
+# AI Logo Generator
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Kullanıcılar metin prompt'ları ile profesyonel logolar oluşturabilirsiniz.
 
-## Get started
+## Proje Hakkında
 
-1. Install dependencies
+Bu uygulama, yapay zeka kullanarak kullanıcıların yazdığı metin açıklamalarından (prompt) logo tasarımları oluşturur(şidmilik mock data ile). React Native (Expo) ile geliştirilmiş mobil uygulama, Firebase backend ile entegre çalışır.
 
+### Özellikler
+
+- **AI Logo Oluşturma**: Metin prompt'u ile logo üretimi
+- **Logo Stilleri**: Monogram, Abstract, Mascot veya stil belirtmeden oluşturma
+- **Gerçek Zamanlı Durum Takibi**: İş durumunu canlı takip (processing, done, failed)
+- **Şık UI/UX**: Modern gradient tasarım, animasyonlar ve premium görünüm
+- **Surprise Me**: Rastgele yaratıcı prompt önerileri
+
+## Kurulum
+
+### Gereksinimler
+
+- Node.js (v18+)
+- npm veya yarn
+- Expo CLI
+- Firebase projesi
+
+### Adımlar
+
+1. **Repo'yu klonlayın:**
+   ```bash
+   git clone https://github.com/mustafagelen/logo-gen.git
+   ```
+
+2. **Bağımlılıkları yükleyin:**
    ```bash
    npm install
    ```
 
-2. Start the app
+3. **Firebase yapılandırması:**
+   
+   `firebaseConfig.ts` dosyası oluşturun ve Firebase bilgilerinizi ekleyin:
+   ```typescript
+   import { initializeApp } from 'firebase/app';
+   import { getFirestore } from 'firebase/firestore';
 
-   ```bash
-   npx expo start
+   const firebaseConfig = {
+     apiKey: "YOUR_API_KEY",
+     authDomain: "YOUR_AUTH_DOMAIN",
+     projectId: "YOUR_PROJECT_ID",
+     storageBucket: "YOUR_STORAGE_BUCKET",
+     messagingSenderId: "YOUR_SENDER_ID",
+     appId: "YOUR_APP_ID"
+   };
+
+   const app = initializeApp(firebaseConfig);
+   export const db = getFirestore(app);
    ```
 
-In the output, you'll find options to open the app in a
+4. **Uygulamayı başlatın:**
+   ```bash
+   npx expo start -c
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Proje Yapısı
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+mobile/
+├── app/                    # Sayfa ve route'lar (Expo Router)
+│   ├── _layout.tsx         # Ana layout, font yükleme, provider'lar
+│   ├── index.tsx           # Ana ekran (logo oluşturma)
+│   └── output.tsx          # Sonuç ekranı (oluşturulan logo)
+├── components/
+│   ├── home/               # Ana ekran component'leri
+│   │   ├── CreateButton.tsx
+│   │   ├── LogoStyleSelector.tsx
+│   │   ├── PromptInput.tsx
+│   │   ├── StatusChip.tsx
+│   │   ├── StyleCard.tsx
+│   │   └── SurpriseButton.tsx
+│   └── icons/              # SVG icon component'leri
+├── hooks/
+│   ├── JobContext.tsx      # Job state yönetimi (Context API)
+│   └── useJobGeneration.ts # Firebase job işlemleri hook'u
+├── types/
+│   └── index.ts            # TypeScript tip tanımları
+├── utils/
+│   └── tailwind.ts         # Tailwind (twrnc) yapılandırması
+└── __tests__/              # Jest testleri
+    └── hooks/
+        └── JobContext.test.ts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Testler
 
-## Learn more
+Proje, **Jest** test framework'ü kullanmaktadır. Testler, JobContext ve iş akışı mantığını doğrular.
 
-To learn more about developing your project with Expo, look at the following resources:
+### Test Komutları
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm test
 
-## Join the community
+npm run test:watch
 
-Join our community of developers creating universal apps.
+npm run test:coverage
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Test Kapsamı
+
+`__tests__/hooks/JobContext.test.ts` dosyasında şu testler bulunur:
+
+| Test Suite | Açıklama |
+|------------|----------|
+| **Job Status Types** | Status değerlerinin (idle, processing, done, failed) doğruluğu |
+| **Job Data Structure** | Job nesnesinin gerekli alanları (id, prompt, logoStyle, status) |
+| **Job Context Interface** | Context'in sağladığı değerler ve fonksiyonlar |
+| **startJob Function** | İş başlatma fonksiyonunun parametre kontrolü |
+| **resetJob Function** | State sıfırlama mantığı |
+| **Status Transitions** | idle → processing → done/failed geçişleri |
+| **Error Handling** | Hata durumlarının yönetimi |
+
+### Örnek Test Çıktısı
+
+```
+PASS  __tests__/hooks/JobContext.test.ts
+  Job Status Types
+    ✓ should have valid status values
+    ✓ idle should be the initial status
+  Job Data Structure
+    ✓ should have required fields
+    ✓ should have correct field types
+    ✓ resultUrl should be optional
+  ...
+
+Test Suites: 1 passed, 1 total
+Tests:       10 passed, 10 total
+Time:        0.509 s
+```
+
+## Geliştirme
+
+### Yeni Icon Ekleme
+
+SVG dosyasını `assets/icons/` klasörüne ekleyin ve şu komutu çalıştırın:
+
+```bash
+npm run gen-icons
+```
+
+Bu komut, SVG'leri React Native component'lerine dönüştürür.
+
+### Kullanılan Teknolojiler
+
+- **React Native** + **Expo** (SDK 54)
+- **Expo Router** - Dosya tabanlı routing
+- **Firebase Firestore** - Veritabanı
+- **twrnc** - Tailwind CSS for React Native
+- **Jest** - Test framework
+- **TypeScript** - Tip güvenliği

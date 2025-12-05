@@ -30,7 +30,6 @@ export const useJobGeneration = () => {
       setCurrentJobId(docRef.id);
 
     } catch (err: any) {
-      console.error("Error starting job:", err);
       setStatus('failed');
       setError(err.message || "Failed to start generation");
     }
