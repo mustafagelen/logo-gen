@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Bg } from '@/components/icons';
 import tw from '@/utils/tailwind';
 import PromptInput from '@/components/home/PromptInput';
 import SurpriseButton from '@/components/home/SurpriseButton';
@@ -93,11 +93,15 @@ export default function HomeScreen() {
     };
     const chipTexts = getChipTexts();
 
+    const { width, height } = Dimensions.get('window');
+
     return (
-        <LinearGradient
-            colors={['#0b0b0d', '#1A1A2E', '#0A0A0F']}
-            style={tw`flex-1 relative`}
-        >
+        <View style={tw`flex-1`}>
+            <Bg
+                width={width}
+                height={height}
+                style={tw`absolute inset-0`}
+            />
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={tw`flex-1`}
@@ -150,6 +154,6 @@ export default function HomeScreen() {
                     onPress={handleCreate}
                 />
             </View>
-        </LinearGradient>
+        </View>
     );
 }
