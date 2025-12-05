@@ -24,7 +24,7 @@ export default function StatusChip({ status, title, subtitle, url }: StatusChipP
                             <ActivityIndicator style={tw`w-9 h-9`} color="#FFFFFF" />
                         </View>
                         <View style={tw`flex-1 px-3 py-[14.5px] justify-center`}>
-                            <Text style={tw`text-[FAFAFA] text-[16px] font-bold`}>{title}</Text>
+                            <Text style={tw`text-[#FAFAFA] text-[16px] font-bold`}>{title}</Text>
                             <Text style={tw`text-[#71717A] text-[13px]`}>{subtitle}</Text>
                         </View>
                     </View>
